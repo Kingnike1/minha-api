@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Informações do Filme - Flip Card</title>
+    <style>
+/* Estilo global */
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #ffffff, #f0f4f8);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  color: #333;
+}
+
+/* Cabeçalho */
+h1 {
+  text-align: center;
+  color: #333;
+  font-size: 2.5em;
+  margin: 20px 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Container do input */
+.input-container {
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Estilo do campo de input */
+input[type="text"] {
+  padding: 15px;
+  width: 100%;
+  max-width: 350px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1.1em;
+  background-color: #f7f9fc;
+  color: #333;
+  outline: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #4d90fe;
+  box-shadow: 0 2px 8px rgba(77, 144, 254, 0.3);
+}
+
+/* Estilo do botão */
+button {
+  padding: 12px 25px;
+  background-color: #4d90fe;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(77, 144, 254, 0.3);
+}
+
+button:hover {
+  background-color: #3578e5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(77, 144, 254, 0.4);
+}
+
+      /* Estilos para o flip card */
+      .flip-card {
+        background-color: transparent;
+        width: 300px;
+        height: 400px; /* Altura ajustada para comportar as informações no verso */
+        border: 1px solid #f1f1f1;
+        perspective: 1000px; /* Mantém o efeito 3D */
+        margin: 20px;
+      }
+
+      .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+      }
+
+      .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .flip-card-front,
+      .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden; /* Safari */
+        backface-visibility: hidden;
+        border-radius: 12px;
+      }
+
+      /* Frente do card */
+      .flip-card-front {
+        background-color: #fff;
+        color: black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        /* Transição de opacidade para desaparecer durante o flip */
+        transition: opacity 0.8s ease;
+      }
+
+      /* Ao passar o mouse, a face frontal se torna opaca */
+      .flip-card:hover .flip-card-front {
+        opacity: 0;
+      }
+
+      .flip-card-front img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px 12px 0 0;
+      }
+
+      .flip-card-front h2 {
+        font-size: 1.2em;
+        margin: 10px 0 0;
+      }
+
+      /* Verso do card */
+      .flip-card-back {
+        background-color: dodgerblue;
+        color: white;
+        transform: rotateY(180deg);
+        padding: 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+      }
+
+      .flip-card-back h2 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+      }
+
+      .flip-card-back p {
+        font-size: 0.9em;
+        margin: 5px 0;
+      }
+      /* Responsividade */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2em;
+  }
+  .flip-card {
+    width: 90%;
+    height: 350px;
+  }
+  input[type="text"] {
+    font-size: 1em;
+  }
+  button {
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5em;
+  }
+  .flip-card {
+    width: 90%;
+    height: 300px;
+  }
+  input[type="text"] {
+    font-size: 0.9em;
+  }
+  button {
+    font-size: 1em;
+    padding: 10px 20px;
+  }
+}
+    </style>
+  </head>
+  <body>
+    <h1>Informações sobre o Filme</h1>
+    <div class="input-container">
+      <label for="movie-title">Digite o nome do filme:</label>
+      <input type="text" id="movie-title" placeholder="Ex: Inception" />
+      <button onclick="fetchMovie()">Buscar</button>
+    </div>
+
+    <!-- Div para exibir o flip card com os resultados -->
+    <div id="movie">
+      <p style="text-align: center; font-size: 1.2em; color: #333;">
+        Pesquise por filmes e obtenha informações detalhadas como sinopse, elenco, gênero e muito mais.
+        Exemplo: "Inception", "The Matrix" ou "Forrest Gump".
+      </p>
+
+      <!-- Exemplo de como o conteúdo será exibido após a pesquisa -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="https://via.placeholder.com/300x450?text=Poster+do+Filme" alt="Exemplo de Filme">
+            <h2>Nome do Filme</h2>
+          </div>
+          <div class="flip-card-back">
+            <h2>Nome do Filme (2025)</h2>
+            <p><strong>Diretor:</strong> Nome do Diretor</p>
+            <p><strong>Atores:</strong> Ator 1, Ator 2, Ator 3</p>
+            <p><strong>Gênero:</strong> Ação, Drama</p>
+            <p><strong>Resumo:</strong> Um filme incrível que mistura ação e emoção em uma jornada épica.</p>
+            <p><strong>Popularidade:</strong> 85%</p>
+            <p><strong>Trailer:</strong> <a href="https://www.youtube.com/watch?v=example" target="_blank">Assistir Trailer</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script>
+      async function fetchMovie() {
+        const titleInput = document.getElementById('movie-title');
+        const title = titleInput.value.trim();
+        const apiKeyOMDb = 'd044463e'; // Sua chave da OMDb API
+        const apiKeyTMDb = '48d9a534329856096d05454c42e16275'; // Sua chave da TMDb API
+        const movieDiv = document.getElementById('movie');
+
+        if (!title) {
+          alert('Por favor, insira um nome de filme.');
+          return;
+        }
+
+        movieDiv.innerHTML = '<p style="text-align: center;">Carregando...</p>';
+
+        try {
+          // Requisição à OMDb API
+          const responseOMDb = await fetch(
+            `https://www.omdbapi.com/?t=${encodeURIComponent(title)}&apikey=${apiKeyOMDb}`
+          );
+          const dataOMDb = await responseOMDb.json();
+
+          if (dataOMDb.Response === 'True') {
+            // Requisição à TMDb API para obter popularidade e trailer
+            const responseTMDb = await fetch(
+              `https://api.themoviedb.org/3/search/movie?api_key=${apiKeyTMDb}&query=${encodeURIComponent(title)}`
+            );
+            const dataTMDb = await responseTMDb.json();
+            const movieDataTMDb = dataTMDb.results[0];
+
+            const trailerResponse = await fetch(
+              `https://api.themoviedb.org/3/movie/${movieDataTMDb.id}/videos?api_key=${apiKeyTMDb}`
+            );
+            const trailerData = await trailerResponse.json();
+            const trailer = trailerData.results.length > 0 ? trailerData.results[0].key : '';
+
+            // Exibe o resultado no formato de flip card
+            movieDiv.innerHTML = `
+              <div class="flip-card">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front">
+                    <img src="${dataOMDb.Poster}" alt="${dataOMDb.Title}">
+                    <h2>${dataOMDb.Title}</h2>
+                  </div>
+                  <div class="flip-card-back">
+                    <h2>${dataOMDb.Title} (${dataOMDb.Year})</h2>
+                    <p><strong>Diretor:</strong> ${dataOMDb.Director}</p>
+                    <p><strong>Atores:</strong> ${dataOMDb.Actors}</p>
+                    <p><strong>Gênero:</strong> ${dataOMDb.Genre}</p>
+                    <p><strong>Resumo:</strong> ${dataOMDb.Plot}</p>
+                    <p><strong>Popularidade:</strong> ${movieDataTMDb.popularity}</p>
+                    <p><strong>Trailer:</strong> ${trailer ? `<a href="https://www.youtube.com/watch?v=${trailer}" target="_blank">Assistir trailer</a>` : 'Não disponível'}</p>
+                  </div>
+                </div>
+              </div>
+            `;
+          } else {
+            movieDiv.innerHTML =
+              '<p style="text-align: center;">Filme não encontrado. Tente novamente.</p>';
+          }
+        } catch (error) {
+          console.error('Erro ao buscar o filme:', error);
+          movieDiv.innerHTML =
+            '<p style="text-align: center; color: red;">Falha ao carregar os dados do filme.</p>';
+        }
+      }
+    </script>
+  </body>
+</html>

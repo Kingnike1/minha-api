@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecionando...</title>
+    <meta http-equiv="refresh" content="2;url=minha-api/public/index.html">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            font-size: 2em;
+            color: #333;
+        }
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+        .loading {
+            font-size: 1em;
+            margin-top: 20px;
+            color: #007bff;
+        }
+        /* Responsividade */
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 1.8em;
+        }
+        p {
+            font-size: 1.1em;
+        }
+        .loading {
+            font-size: 0.9em;
+        }
+    }
+
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 1.5em;
+        }
+        p {
+            font-size: 1em;
+        }
+        .loading {
+            font-size: 0.85em;
+        }
+    }
+    </style>
+</head>
+<body>
+    <h1>Bem-vindo ao nosso site!</h1>
+    <p>Você será redirecionado para a seção da API...</p>
+    <div class="loading">Redirecionando em 2 segundos...</div>
+</body>
+</html>
