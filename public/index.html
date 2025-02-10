@@ -4,85 +4,87 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Informações do Filme - Flip Card</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-/* Estilo global */
-body {
-  font-family: 'Roboto', sans-serif;
-  background: linear-gradient(135deg, #ffffff, #f0f4f8);
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  color: #333;
-}
+      /* Estilo global vibrante */
+      body {
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(135deg, #070705, #1A1C1E, #2E3440);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        color: #E5E9F0;
+      }
 
-/* Cabeçalho */
-h1 {
-  text-align: center;
-  color: #333;
-  font-size: 2.5em;
-  margin: 20px 0;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-weight: 600;
-}
+      /* Cabeçalho vibrante */
+      h1 {
+        text-align: center;
+        color: #f7f6ee;
+        font-size: 2.8em;
+        margin: 20px 0;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-weight: 700;
+        text-shadow: 2px 2px 8px rgba(193, 192, 174, 0.5);
+      }
 
-/* Container do input */
-.input-container {
-  text-align: center;
-  margin-bottom: 20px;
-  width: 100%;
-  max-width: 400px;
-}
+      /* Container do input */
+      .input-container {
+        text-align: center;
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 400px;
+      }
 
-/* Estilo do campo de input */
-input[type="text"] {
-  padding: 15px;
-  width: 100%;
-  max-width: 350px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  font-size: 1.1em;
-  background-color: #f7f9fc;
-  color: #333;
-  outline: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
+      /* Campo de input colorido */
+      input[type="text"] {
+        padding: 15px;
+        width: 100%;
+        max-width: 350px;
+        border: 2px solid #4C566A;
+        border-radius: 8px;
+        font-size: 1.2em;
+        background-color: #3B4252;
+        color: #E5E9F0;
+        outline: none;
+        box-shadow: 0 2px 5px rgba(76, 86, 106, 0.3);
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
 
-input[type="text"]:focus {
-  border-color: #4d90fe;
-  box-shadow: 0 2px 8px rgba(77, 144, 254, 0.3);
-}
+      input[type="text"]:focus {
+        border-color: #88C0D0;
+        box-shadow: 0 2px 8px rgba(136, 192, 208, 0.5);
+      }
 
-/* Estilo do botão */
-button {
-  padding: 12px 25px;
-  background-color: #4d90fe;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1em;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(77, 144, 254, 0.3);
-}
+      /* Botão estilizado */
+      button {
+        padding: 12px 25px;
+        background: linear-gradient(135deg, #81A1C1, #5E81AC);
+        color: #E5E9F0;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 6px rgba(62, 75, 81, 0.3);
+      }
 
-button:hover {
-  background-color: #3578e5;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(77, 144, 254, 0.4);
-}
+      button:hover {
+        background: linear-gradient(135deg, #88C0D0, #81A1C1);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 10px rgba(136, 192, 208, 0.4);
+      }
 
-      /* Estilos para o flip card */
+      /* Cartões animados */
       .flip-card {
         background-color: transparent;
         width: 300px;
-        height: 400px; /* Altura ajustada para comportar as informações no verso */
-        border: 1px solid #f1f1f1;
-        perspective: 1000px; /* Mantém o efeito 3D */
+        height: 450px;
+        perspective: 1000px;
         margin: 20px;
       }
 
@@ -91,7 +93,7 @@ button:hover {
         width: 100%;
         height: 100%;
         text-align: center;
-        transition: transform 0.8s;
+        transition: transform 0.8s ease-in-out;
         transform-style: preserve-3d;
       }
 
@@ -104,44 +106,31 @@ button:hover {
         position: absolute;
         width: 100%;
         height: 100%;
-        -webkit-backface-visibility: hidden; /* Safari */
         backface-visibility: hidden;
         border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
-      /* Frente do card */
       .flip-card-front {
-        background-color: #fff;
-        color: black;
+        background: linear-gradient(135deg, #4C566A, #3B4252);
+        color: #E5E9F0;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         padding: 10px;
-        /* Transição de opacidade para desaparecer durante o flip */
         transition: opacity 0.8s ease;
       }
 
-      /* Ao passar o mouse, a face frontal se torna opaca */
-      .flip-card:hover .flip-card-front {
-        opacity: 0;
-      }
-
-      .flip-card-front img {
-        width: 100%;
-        height: auto;
-        border-radius: 12px 12px 0 0;
-      }
-
       .flip-card-front h2 {
-        font-size: 1.2em;
+        font-size: 1.5em;
         margin: 10px 0 0;
+        color: #C1C0AE;
       }
 
-      /* Verso do card */
       .flip-card-back {
-        background-color: dodgerblue;
-        color: white;
+        background: linear-gradient(135deg, #81A1C1, #5E81AC);
+        color: #E5E9F0;
         transform: rotateY(180deg);
         padding: 20px;
         box-sizing: border-box;
@@ -149,47 +138,127 @@ button:hover {
       }
 
       .flip-card-back h2 {
-        font-size: 1.5em;
+        font-size: 1.6em;
         margin-bottom: 10px;
       }
 
       .flip-card-back p {
-        font-size: 0.9em;
+        font-size: 1em;
         margin: 5px 0;
       }
-      /* Responsividade */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 2em;
-  }
-  .flip-card {
-    width: 90%;
-    height: 350px;
-  }
-  input[type="text"] {
-    font-size: 1em;
-  }
-  button {
-    font-size: 1em;
-  }
-}
 
-@media (max-width: 480px) {
-  h1 {
-    font-size: 1.5em;
-  }
-  .flip-card {
-    width: 90%;
-    height: 300px;
-  }
-  input[type="text"] {
-    font-size: 0.9em;
-  }
-  button {
-    font-size: 1em;
-    padding: 10px 20px;
-  }
-}
+      .flip-card-back a {
+        color: #88C0D0;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .flip-card-back a:hover {
+        text-decoration: underline;
+      }
+
+      /* Mensagem de erro */
+      .error-message {
+        color: #BF616A;
+        font-size: 1.1em;
+        margin-top: 10px;
+        text-align: center;
+        font-weight: bold;
+      }
+      .loading {
+        font-size: 1.1em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        background-color: white;
+        border-radius: 50%;
+        animation: blink 1.4s infinite ease-in-out both;
+      }
+      .dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes blink {
+        0%, 80%, 100% {
+          opacity: 0;
+        }
+        40% {
+          opacity: 1;
+        }
+      }
+      /* Estilos para a tabela */
+      .tabela {
+        width: 100%; /* Ocupa 100% da largura disponível */
+        margin: 20px 0; /* Remove margens laterais */
+        border-collapse: collapse;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(135deg, #4C566A, #3B4252);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .tabela th,
+      .tabela td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .tabela th {
+        background-color: #2E3440;
+        color: #C1C0AE;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .tabela tr:hover {
+        background-color: rgba(136, 192, 208, 0.1);
+        transition: background-color 0.3s ease;
+      }
+
+      .tabela img {
+        width: 100px;
+        height: auto;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Estilo para links na tabela */
+      .tabela a {
+        color: #88C0D0;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .tabela a:hover {
+        text-decoration: underline;
+      }
+
+      /* Estilo para o texto na tabela */
+      .tabela td {
+        color: #E5E9F0;
+      }
+
+      /* Estilo para o cabeçalho da tabela */
+      .tabela thead {
+        background: linear-gradient(135deg, #2E3440, #1A1C1E);
+      }
+
+      /* Estilo para as células da tabela */
+      .tabela tbody tr:nth-child(odd) {
+        background-color: rgba(76, 86, 106, 0.1);
+      }
+
+      .tabela tbody tr:nth-child(even) {
+        background-color: rgba(59, 66, 82, 0.1);
+      }
     </style>
   </head>
   <body>
@@ -198,36 +267,22 @@ button:hover {
       <label for="movie-title">Digite o nome do filme:</label>
       <input type="text" id="movie-title" placeholder="Ex: Inception" />
       <button onclick="fetchMovie()">Buscar</button>
+      <p class="error-message" id="error-message"></p>
     </div>
 
     <!-- Div para exibir o flip card com os resultados -->
     <div id="movie">
-      <p style="text-align: center; font-size: 1.2em; color: #333;">
-        Pesquise por filmes e obtenha informações detalhadas como sinopse, elenco, gênero e muito mais.
+      <p style="text-align: center; font-size: 1.2em; color: #c7c5c5;">
+        Pesquise por filmes e obtenha informações detalhadas como sinopse,
+        elenco, gênero e muito mais.
         Exemplo: "Inception", "The Matrix" ou "Forrest Gump".
       </p>
-
-      <!-- Exemplo de como o conteúdo será exibido após a pesquisa -->
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="https://via.placeholder.com/300x450?text=Poster+do+Filme" alt="Exemplo de Filme">
-            <h2>Nome do Filme</h2>
-          </div>
-          <div class="flip-card-back">
-            <h2>Nome do Filme (2025)</h2>
-            <p><strong>Diretor:</strong> Nome do Diretor</p>
-            <p><strong>Atores:</strong> Ator 1, Ator 2, Ator 3</p>
-            <p><strong>Gênero:</strong> Ação, Drama</p>
-            <p><strong>Resumo:</strong> Um filme incrível que mistura ação e emoção em uma jornada épica.</p>
-            <p><strong>Popularidade:</strong> 85%</p>
-            <p><strong>Trailer:</strong> <a href="https://www.youtube.com/watch?v=example" target="_blank">Assistir Trailer</a></p>
-          </div>
-        </div>
-      </div>
     </div>
 
+    <div class="tabela" id="tabela"></div>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       async function fetchMovie() {
         const titleInput = document.getElementById('movie-title');
@@ -241,7 +296,7 @@ button:hover {
           return;
         }
 
-        movieDiv.innerHTML = '<p style="text-align: center;">Carregando...</p>';
+        movieDiv.innerHTML = '    <div class="loading"> Carregando <span class="dot"></span><span class="dot"></span><span class="dot"></span></div>'
 
         try {
           // Requisição à OMDb API
@@ -294,6 +349,69 @@ button:hover {
             '<p style="text-align: center; color: red;">Falha ao carregar os dados do filme.</p>';
         }
       }
+
+    // Função para buscar filmes populares
+    async function fetchPopularMovies() {
+      const apiKey = '48d9a534329856096d05454c42e16275'; // Substitua pela sua chave da API TMDb
+      const url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=pt-BR`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data.results; // Retorna uma lista de filmes populares
+      } catch (error) {
+        console.error('Erro ao buscar filmes populares:', error);
+        return [];
+      }
+    }
+
+    // Função para criar a tabela de filmes
+    async function createMovieTable() {
+      const movies = await fetchPopularMovies(); // Busca os filmes populares
+      const tabelaDiv = document.getElementById('tabela');
+
+      if (movies.length === 0) {
+        tabelaDiv.innerHTML = '<p>Nenhum filme encontrado.</p>';
+        return;
+      }
+
+      // Cria a estrutura da tabela
+      let tableHTML = `
+        <table class="table table-dark table-hover">
+          <thead>
+            <tr>
+              <th>Poster</th>
+              <th>Título</th>
+              <th>Data de Lançamento</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      // Adiciona cada filme como uma linha na tabela
+      movies.forEach(movie => {
+        tableHTML += `
+          <tr>
+            <td><img src="https://image.tmdb.org/t/p/w200${movie.poster_path}" alt="${movie.title}"></td>
+            <td>${movie.title}</td>
+            <td>${movie.release_date}</td>
+            <td>${movie.vote_average}</td>
+          </tr>
+        `;
+      });
+
+      tableHTML += `
+          </tbody>
+        </table>
+      `;
+
+      // Insere a tabela na div
+      tabelaDiv.innerHTML = tableHTML;
+    }
+
+    // Executa a função para criar a tabela ao carregar a página
+    createMovieTable();
     </script>
   </body>
 </html>
