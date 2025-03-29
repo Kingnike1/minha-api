@@ -1,0 +1,252 @@
+/* Estilo global vibrante */
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #070705, #1A1C1E, #2E3440);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  color: #E5E9F0;
+}
+
+/* Cabeçalho vibrante */
+h1 {
+  text-align: center;
+  color: #f7f6ee;
+  font-size: 2.8em;
+  margin: 20px 0;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-shadow: 2px 2px 8px rgba(193, 192, 174, 0.5);
+}
+
+/* Container do input */
+.input-container {
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Campo de input colorido */
+input[type="text"] {
+  padding: 15px;
+  width: 100%;
+  max-width: 350px;
+  border: 2px solid #4C566A;
+  border-radius: 8px;
+  font-size: 1.2em;
+  background-color: #3B4252;
+  color: #E5E9F0;
+  outline: none;
+  box-shadow: 0 2px 5px rgba(76, 86, 106, 0.3);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #88C0D0;
+  box-shadow: 0 2px 8px rgba(136, 192, 208, 0.5);
+}
+
+/* Botão estilizado */
+button {
+  padding: 12px 25px;
+  background: linear-gradient(135deg, #81A1C1, #5E81AC);
+  color: #E5E9F0;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(62, 75, 81, 0.3);
+}
+
+button:hover {
+  background: linear-gradient(135deg, #88C0D0, #81A1C1);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(136, 192, 208, 0.4);
+}
+
+/* Cartões animados */
+.flip-card {
+  background-color: transparent;
+  width: 300px;
+  height: 450px;
+  perspective: 1000px;
+  margin: 20px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s ease-in-out;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.flip-card-front {
+  background: linear-gradient(135deg, #4C566A, #3B4252);
+  color: #E5E9F0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  transition: opacity 0.8s ease;
+}
+
+.flip-card-front h2 {
+  font-size: 1.5em;
+  margin: 10px 0 0;
+  color: #C1C0AE;
+}
+
+.flip-card-back {
+  background: linear-gradient(135deg, #81A1C1, #5E81AC);
+  color: #E5E9F0;
+  transform: rotateY(180deg);
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.flip-card-back h2 {
+  font-size: 1.6em;
+  margin-bottom: 10px;
+}
+
+.flip-card-back p {
+  font-size: 1em;
+  margin: 5px 0;
+}
+
+.flip-card-back a {
+  color: #88C0D0;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.flip-card-back a:hover {
+  text-decoration: underline;
+}
+
+/* Mensagem de erro */
+.error-message {
+  color: #BF616A;
+  font-size: 1.1em;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+.loading {
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  border-radius: 50%;
+  animation: blink 1.4s infinite ease-in-out both;
+}
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+@keyframes blink {
+  0%, 80%, 100% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+/* Estilos para a tabela */
+.tabela {
+  width: 100%; /* Ocupa 100% da largura disponível */
+  margin: 20px 0; /* Remove margens laterais */
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #4C566A, #3B4252);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tabela th,
+.tabela td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tabela th {
+  background-color: #2E3440;
+  color: #C1C0AE;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tabela tr:hover {
+  background-color: rgba(136, 192, 208, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.tabela img {
+  width: 100px;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para links na tabela */
+.tabela a {
+  color: #88C0D0;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.tabela a:hover {
+  text-decoration: underline;
+}
+
+/* Estilo para o texto na tabela */
+.tabela td {
+  color: #E5E9F0;
+}
+
+/* Estilo para o cabeçalho da tabela */
+.tabela thead {
+  background: linear-gradient(135deg, #2E3440, #1A1C1E);
+}
+
+/* Estilo para as células da tabela */
+.tabela tbody tr:nth-child(odd) {
+  background-color: rgba(76, 86, 106, 0.1);
+}
+
+.tabela tbody tr:nth-child(even) {
+  background-color: rgba(59, 66, 82, 0.1);
+}
