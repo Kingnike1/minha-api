@@ -1,98 +1,112 @@
-// server.js
-require('dotenv').config(); // Carrega variáveis do .env
+// ============================
+// 🌎 Configuração e Imports
+// ============================
+require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const app = express();
-const port = process.env.PORT || 3000;
 
-// Servindo arquivos estáticos da pasta "public"
-app.use(express.static('public'));
+const PORT = process.env.PORT || 3000;
+const OMDB_KEY = process.env.OMDB_API_KEY;
+const TMDB_KEY = process.env.TMDB_API_KEY;
 
-// Rota GET para obter uma piada aleatória
+// ============================
+// 📂 Middleware
+// ============================
+app.use(express.static('public')); // Servir front-end
+app.use(express.json()); // Garantir JSON parsing para futuras POSTs
+
+// ============================
+// 😂 Rota de Piadas
+// ============================
 app.get('/piada', async (req, res) => {
-  const url = 'https://v2.jokeapi.dev/joke/Any';
-
   try {
-    const response = await axios.get(url);
+    const { data } = await axios.get('https://v2.jokeapi.dev/joke/Any');
 
-    let piada = {};
-    if (response.data.type === 'single') {
-      piada = {
-        tipo: 'Única',
-        piada: response.data.joke,
-      };
-    } else {
-      piada = {
-        tipo: 'Dupla',
-        pergunta: response.data.setup,
-        resposta: response.data.delivery,
-      };
-    }
+    const piada =
+      data.type === 'single'
+        ? { tipo: 'Única', piada: data.joke }
+        : { tipo: 'Dupla', pergunta: data.setup, resposta: data.delivery };
 
     res.json(piada);
-  } catch (error) {
-    console.error('Erro na requisição à API:', error.response ? error.response.data : error.message);
+  } catch (err) {
+    console.error('❌ Erro na API de piadas:', err.message);
+    res.status(500).json({ erro: 'Falha ao obter piada.' });
+  }
+});
 
-    res.status(500).json({
-      erro: 'Não foi possível obter a piada',
-      detalhes: error.response ? error.response.data : error.message,
+// ============================
+// 🎬 Buscar Filme (OMDb + TMDb)
+// ============================
+app.get('/api/movie', async (req, res) => {
+  const title = req.query.title?.trim();
+  if (!title) return res.status(400).json({ error: 'Digite o título do filme.' });
+
+  try {
+    // Requisições paralelas para performance ⚡
+    const [omdbRes, tmdbRes] = await Promise.all([
+      axios.get('https://www.omdbapi.com/', { params: { t: title, apikey: OMDB_KEY } }),
+      axios.get('https://api.themoviedb.org/3/search/movie', {
+        params: { api_key: TMDB_KEY, query: title, language: 'pt-BR' },
+      }),
+    ]);
+
+    res.json({
+      omdb: omdbRes.data,
+      tmdb: tmdbRes.data.results || [],
     });
-  }
-});
-
-const fetch = require("node-fetch"); // se necessário, instale: npm install node-fetch
-
-app.get("/api/movie", async (req, res) => {
-  const title = req.query.title;
-  if (!title) return res.status(400).json({ error: "Digite o título do filme" });
-
-  try {
-    // OMDb
-    const responseOMDb = await fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(title)}&apikey=${process.env.OMDB_API_KEY}`);
-    const dataOMDb = await responseOMDb.json();
-
-    // TMDb
-    const responseTMDb = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.TMDB_API_KEY}&query=${encodeURIComponent(title)}`);
-    const dataTMDb = await responseTMDb.json();
-
-    res.json({ omdb: dataOMDb, tmdb: dataTMDb.results });
   } catch (err) {
-    res.status(500).json({ error: "Erro ao buscar o filme" });
+    console.error('❌ Erro ao buscar filme:', err.message);
+    res.status(500).json({ error: 'Erro ao buscar informações do filme.' });
   }
 });
 
-app.get("/api/popular", async (req, res) => {
+// ============================
+// 🔥 Filmes Populares
+// ============================
+app.get('/api/popular', async (_, res) => {
   try {
-    const response = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.TMDB_API_KEY}&language=pt-BR`);
-    const movies = response.data.results || [];
-    res.json(movies);
+    const { data } = await axios.get(
+      'https://api.themoviedb.org/3/movie/popular',
+      { params: { api_key: TMDB_KEY, language: 'pt-BR' } }
+    );
+
+    res.json(data.results || []);
   } catch (err) {
-    console.error("Erro ao buscar filmes populares:", err.response ? err.response.data : err.message);
-    res.status(500).json({ error: "Não foi possível obter filmes populares" });
+    console.error('❌ Erro ao buscar filmes populares:', err.message);
+    res.status(500).json({ error: 'Falha ao obter filmes populares.' });
   }
 });
-app.get("/api/related", async (req, res) => {
-  const query = req.query.query;
+
+// ============================
+// 🔍 Filmes Relacionados
+// ============================
+app.get('/api/related', async (req, res) => {
+  const query = req.query.query?.trim();
   if (!query) return res.json([]);
 
   try {
-    const response = await axios.get(`https://api.themoviedb.org/3/search/movie`, {
-      params: {
-        api_key: process.env.TMDB_API_KEY,
-        language: "pt-BR",
-        query
-      }
+    const { data } = await axios.get('https://api.themoviedb.org/3/search/movie', {
+      params: { api_key: TMDB_KEY, language: 'pt-BR', query },
     });
 
-    const titles = (response.data.results || []).map(movie => movie.title);
+    const titles = (data.results || []).map((m) => m.title);
     res.json(titles);
   } catch (err) {
-    console.error("Erro ao buscar filmes relacionados:", err.response ? err.response.data : err.message);
+    console.error('❌ Erro ao buscar relacionados:', err.message);
     res.status(500).json([]);
   }
 });
 
-// Iniciar o servidor
-app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
+// ============================
+// 🧠 Tratamento Global de Erros
+// ============================
+app.use((err, req, res, _next) => {
+  console.error('⚠️ Erro inesperado:', err);
+  res.status(500).json({ error: 'Erro interno do servidor.' });
 });
+
+// ============================
+// 🚀 Inicialização
+// ============================
+app.listen(PORT, () => console.log(`✅ Servidor rodando em http://localhost:${PORT}`));
